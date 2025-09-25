@@ -31,4 +31,9 @@ void inserir (lista_linear_t* lista, int valor);
 bool lista_cheia(lista_linear_t* lista);
 int buscar (lista_linear_t* lista, int valor);
 
+// -----------LISTA_ENCADEADA--------------
+typedef struct no no_t;
+no_t* criar_le(int valor);
+no_t* adicionar_le(no_t* inicio, int valor);
+
 #endif
