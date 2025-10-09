@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include "libprg/libprg.h"
 
-
-// ---------- FILA -----------------
 struct fila {
-    int* elementos;
+    int *dados;
     int inicio;
     int fim;
     int tamanho;
@@ -13,15 +11,13 @@ struct fila {
 };
 
 fila_t* criar_fila(int capacidade) {
-    fila_t* f = (fila_t*) malloc(sizeof(fila_t));
+    fila_t* f = malloc(sizeof(fila_t));
     if (!f) return NULL;
-
-    f->elementos = (int*) malloc(capacidade * sizeof(int));
-    if (!f->elementos) {
+    f->dados = malloc(capacidade * sizeof(int));
+    if (!f->dados) {
         free(f);
         return NULL;
     }
-
     f->inicio = 0;
     f->fim = -1;
     f->tamanho = 0;
@@ -30,50 +26,49 @@ fila_t* criar_fila(int capacidade) {
 }
 
 int enfileirar(fila_t* f, int valor) {
-    if (!f || f->tamanho == f->capacidade) {
-        return 0; // falha
-    }
+    if (f->tamanho == f->capacidade) return 0;
     f->fim = (f->fim + 1) % f->capacidade;
-    f->elementos[f->fim] = valor;
+    f->dados[f->fim] = valor;
     f->tamanho++;
-    return 1; // sucesso
+    return 1;
 }
 
-int desenfileirar(fila_t* f, int* valor) {
-    if (!f || f->tamanho == 0) {
-        return 0; // falha
-    }
-    *valor = f->elementos[f->inicio];
+int desenfileirar(fila_t* f, int *valor) {
+    if (f->tamanho == 0) return 0;
+    *valor = f->dados[f->inicio];
     f->inicio = (f->inicio + 1) % f->capacidade;
     f->tamanho--;
-    return 1; // sucesso
+    return 1;
 }
 
-int frente_fila(fila_t* f, int* valor) {
-    if (!f || f->tamanho == 0) {
-        return 0; // falha
-    }
-    *valor = f->elementos[f->inicio];
-    return 1; // sucesso
+int frente_fila(fila_t* f, int *valor) {
+    if (f->tamanho == 0) return 0;
+    *valor = f->dados[f->inicio];
+    return 1;
 }
 
 int tamanho_fila(fila_t* f) {
-    if (!f) return -1;
     return f->tamanho;
 }
 
+bool fila_vazia(fila_t* f) {
+    return f->tamanho == 0;
+}
+
+bool fila_cheia(fila_t* f) {
+    return f->tamanho == f->capacidade;
+}
+
 void imprimir_fila(fila_t* f) {
-    if (!f) return;
-    printf("Fila: ");
-    for (int i = 0; i < f->tamanho; i++) {
-        int idx = (f->inicio + i) % f->capacidade;
-        printf("%d ", f->elementos[idx]);
+    int i, idx;
+    for (i = 0; i < f->tamanho; i++) {
+        idx = (f->inicio + i) % f->capacidade;
+        printf("%d ", f->dados[idx]);
     }
     printf("\n");
 }
 
 void destruir_fila(fila_t* f) {
-    if (!f) return;
-    free(f->elementos);
+    free(f->dados);
     free(f);
 }

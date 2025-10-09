@@ -1,23 +1,56 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "libprg/libprg.h"
 
-typedef struct no {
+struct no {
     int valor;
-    struct no* proximo;
-}no_t;
+    struct no* prox;
+};
 
 no_t* criar_le(int valor) {
-
-    no_t* no=malloc(sizeof(no_t));
-    no->valor = valor;
-    no->proximo = NULL;
-
-    return no;
+    no_t* novo = malloc(sizeof(no_t));
+    if (!novo) return NULL;
+    novo->valor = valor;
+    novo->prox = NULL;
+    return novo;
 }
-no_t* adicionar_le(no_t* inicio, int valor) {
-    no_t* novo_no= criar(valor);
-    novo_no->proximo = inicio;
-    inicio= novo_no;
-    return inicio;
 
+void adicionar_le(no_t** inicio, int valor) {
+    no_t* novo = criar_le(valor);
+    if (!novo) return;
+    novo->prox = *inicio;
+    *inicio = novo;
+}
+
+no_t* buscar_lista_enc(no_t** inicio, int valor) {
+    no_t* atual = *inicio;
+    while (atual) {
+        if (atual->valor == valor) return atual;
+        atual = atual->prox;
+    }
+    return NULL;
+}
+
+int remover_lista_enc(no_t** inicio, int valor) {
+    no_t* atual = *inicio;
+    no_t* anterior = NULL;
+    while (atual && atual->valor != valor) {
+        anterior = atual;
+        atual = atual->prox;
+    }
+    if (!atual) return 0;
+    if (!anterior) *inicio = atual->prox;
+    else anterior->prox = atual->prox;
+    free(atual);
+    return 1;
+}
+
+void destruir_lista_enc(no_t** inicio) {
+    no_t* atual = *inicio;
+    while (atual) {
+        no_t* temp = atual;
+        atual = atual->prox;
+        free(temp);
+    }
+    *inicio = NULL;
 }
