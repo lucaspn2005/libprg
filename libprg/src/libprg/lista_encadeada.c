@@ -1,56 +1,85 @@
+#include "libprg/libprg.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "libprg/libprg.h"
 
+/* Estrutura do nó da lista encadeada simples */
 struct no {
     int valor;
-    struct no* prox;
+    struct no* proximo;
 };
 
-no_t* criar_le(int valor) {
+/* Cria um novo nó com o valor informado */
+no_t* criar_no(int valor) {
     no_t* novo = malloc(sizeof(no_t));
     if (!novo) return NULL;
+
     novo->valor = valor;
-    novo->prox = NULL;
+    novo->proximo = NULL;
     return novo;
 }
 
-void adicionar_le(no_t** inicio, int valor) {
-    no_t* novo = criar_le(valor);
+/* Adiciona um novo nó no início da lista */
+void adicionar_no(no_t** inicio, int valor) {
+    if (!inicio) return;
+
+    no_t* novo = criar_no(valor);
     if (!novo) return;
-    novo->prox = *inicio;
+
+    novo->proximo = *inicio;
     *inicio = novo;
 }
 
-no_t* buscar_lista_enc(no_t** inicio, int valor) {
-    no_t* atual = *inicio;
-    while (atual) {
-        if (atual->valor == valor) return atual;
-        atual = atual->prox;
+/* Busca um nó pelo valor e retorna o ponteiro para ele */
+no_t* buscar_no(no_t* inicio, int valor) {
+    for (no_t* atual = inicio; atual != NULL; atual = atual->proximo) {
+        if (atual->valor == valor)
+            return atual;
     }
     return NULL;
 }
 
-int remover_lista_enc(no_t** inicio, int valor) {
+/* Remove o primeiro nó com o valor especificado */
+int remover_no(no_t** inicio, int valor) {
+    if (!inicio || !*inicio) return 0;
+
     no_t* atual = *inicio;
     no_t* anterior = NULL;
-    while (atual && atual->valor != valor) {
+
+    while (atual != NULL) {
+        if (atual->valor == valor) {
+            if (anterior == NULL) {
+                // Removendo o primeiro nó
+                *inicio = atual->proximo;
+            } else {
+                anterior->proximo = atual->proximo;
+            }
+            free(atual);
+            return 1; // Removido com sucesso
+        }
         anterior = atual;
-        atual = atual->prox;
+        atual = atual->proximo;
     }
-    if (!atual) return 0;
-    if (!anterior) *inicio = atual->prox;
-    else anterior->prox = atual->prox;
-    free(atual);
-    return 1;
+    return 0; // Valor não encontrado
 }
 
-void destruir_lista_enc(no_t** inicio) {
+/* Imprime todos os elementos da lista */
+void imprimir_lista_encadeada(no_t* inicio) {
+    printf("Lista: ");
+    for (no_t* atual = inicio; atual != NULL; atual = atual->proximo) {
+        printf("%d ", atual->valor);
+    }
+    printf("\n");
+}
+
+/* Libera toda a memória da lista */
+void destruir_lista_encadeada(no_t** inicio) {
+    if (!inicio) return;
+
     no_t* atual = *inicio;
-    while (atual) {
-        no_t* temp = atual;
-        atual = atual->prox;
-        free(temp);
+    while (atual != NULL) {
+        no_t* proximo = atual->proximo;
+        free(atual);
+        atual = proximo;
     }
     *inicio = NULL;
 }
