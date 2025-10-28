@@ -95,4 +95,5 @@ void destruir_fila(fila_t* f) {
     if (!f) return;
     free(f->dados);
     free(f);
+
 }

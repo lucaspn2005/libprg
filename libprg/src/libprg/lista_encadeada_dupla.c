@@ -91,4 +91,5 @@ void destruir_lista_dupla(no_duplo_t **inicio) {
         atual = prox;
     }
     *inicio = NULL;
+
 }

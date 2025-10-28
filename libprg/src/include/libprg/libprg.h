@@ -80,4 +80,5 @@ int remover_no_duplo(no_duplo_t** inicio, int valor);
 void imprimir_lista_dupla(no_duplo_t* inicio);
 void destruir_lista_dupla(no_duplo_t** inicio);
 
-#endif /* LIBPRG_LIBPRG_H */
+#endif
+/* LIBPRG_LIBPRG_H */

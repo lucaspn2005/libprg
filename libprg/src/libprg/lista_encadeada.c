@@ -82,4 +82,5 @@ void destruir_lista_encadeada(no_t** inicio) {
         atual = proximo;
     }
     *inicio = NULL;
+
 }

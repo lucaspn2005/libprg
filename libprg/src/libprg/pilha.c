@@ -66,4 +66,5 @@ void destruir_pilha(pilha_t *p) {
     if (!p) return;
     free(p->dados);
     free(p);
+
 }

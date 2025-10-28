@@ -109,6 +109,7 @@ void exibir_lista(lista_linear_t *lista) {
     for (int i = 0; i < lista->tamanho; i++)
         printf("%d ", lista->dados[i]);
     printf("\n");
+
 }
 
 void destruir_lista(lista_linear_t *lista) {
