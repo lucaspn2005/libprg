@@ -3,9 +3,9 @@
 
 #include <stdbool.h>
 
-/* ---------------------------
- *        PILHA
- * ---------------------------*/
+/* ============================================================
+ *                         PILHA
+ * ============================================================*/
 typedef struct pilha pilha_t;
 
 pilha_t* criar_pilha(int capacidade);
@@ -18,10 +18,9 @@ bool pilha_cheia(pilha_t* p);
 void imprimir_pilha(pilha_t* p);
 void destruir_pilha(pilha_t* p);
 
-
-/* ---------------------------
- *         FILA
- * ---------------------------*/
+/* ============================================================
+ *                         FILA
+ * ============================================================*/
 typedef struct fila fila_t;
 
 fila_t* criar_fila(int capacidade);
@@ -34,10 +33,9 @@ bool fila_cheia(fila_t* f);
 void imprimir_fila(fila_t* f);
 void destruir_fila(fila_t* f);
 
-
-/* ---------------------------
- *     LISTA LINEAR
- * ---------------------------*/
+/* ============================================================
+ *                     LISTA LINEAR
+ * ============================================================*/
 typedef struct lista_linear lista_linear_t;
 
 lista_linear_t* criar_lista_linear(int capacidade, bool ordenada);
@@ -54,10 +52,9 @@ int busca_na_posicao(lista_linear_t* lista, int posicao, int *valor);
 void exibir_lista(lista_linear_t* lista);
 void destruir_lista(lista_linear_t* lista);
 
-
-/* ---------------------------
- *  LISTA ENCADEADA SIMPLES
- * ---------------------------*/
+/* ============================================================
+ *              LISTA ENCADEADA SIMPLES
+ * ============================================================*/
 typedef struct no no_t;
 
 no_t* criar_no(int valor);
@@ -67,10 +64,9 @@ int remover_no(no_t** inicio, int valor);
 void imprimir_lista_encadeada(no_t* inicio);
 void destruir_lista_encadeada(no_t** inicio);
 
-
-/* ---------------------------
- * LISTA ENCADEADA DUPLAMENTE
- * ---------------------------*/
+/* ============================================================
+ *          LISTA ENCADEADA DUPLAMENTE
+ * ============================================================*/
 typedef struct no_duplo no_duplo_t;
 
 no_duplo_t* criar_no_duplo(int valor);
@@ -79,6 +75,34 @@ no_duplo_t* buscar_no_duplo(no_duplo_t* inicio, int valor);
 int remover_no_duplo(no_duplo_t** inicio, int valor);
 void imprimir_lista_dupla(no_duplo_t* inicio);
 void destruir_lista_dupla(no_duplo_t** inicio);
+
+/* ============================================================
+ *            ALGORITMOS DE ORDENAÇÃO
+ * ============================================================*/
+void bubble_sort(int vetor[], int tamanho);
+void insertion_sort(int vetor[], int tamanho);
+void selection_sort(int vetor[], int tamanho);
+
+/* ============================================================
+ *                  ÁRVORE BINÁRIA
+ * ============================================================*/
+typedef struct no_arvore no_arvore_t;
+
+no_arvore_t* arv_criar_no(int valor);
+no_arvore_t* arv_inserir(no_arvore_t *raiz, int valor);
+bool arv_buscar(no_arvore_t *raiz, int valor);
+no_arvore_t* arv_remover(no_arvore_t *raiz, int valor);
+void arv_destruir(no_arvore_t *raiz);
+
+/* ============================================================
+ *                         AVL
+ * ============================================================*/
+typedef struct no_avl no_avl_t;
+
+no_avl_t* avl_criar_no(int valor);
+no_avl_t* avl_inserir(no_avl_t *raiz, int valor);
+no_avl_t* avl_remover(no_avl_t *raiz, int valor);
+void avl_destruir(no_avl_t *raiz);
 
 #endif
 /* LIBPRG_LIBPRG_H */
